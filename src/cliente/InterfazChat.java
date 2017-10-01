@@ -27,16 +27,6 @@ public class InterfazChat extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        areaMensajes = new javax.swing.JTextArea();
-        baudio = new javax.swing.JButton();
-        tusuario = new javax.swing.JLabel();
-        eusuario = new javax.swing.JTextField();
-        tservidor = new javax.swing.JLabel();
-        eservidor = new javax.swing.JTextField();
-        epuerto = new javax.swing.JTextField();
-        tpuerto = new javax.swing.JLabel();
-        bConectar = new javax.swing.JButton();
         bDesconectar = new javax.swing.JButton();
         fondo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -44,70 +34,125 @@ public class InterfazChat extends javax.swing.JFrame {
         emensaje = new javax.swing.JTextField();
         bfoto = new javax.swing.JButton();
         benviar = new javax.swing.JButton();
+        tusuario = new javax.swing.JLabel();
+        tservidor = new javax.swing.JLabel();
+        tpuerto = new javax.swing.JLabel();
+        epuerto = new javax.swing.JTextField();
+        eusuario = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        areaMensajes = new javax.swing.JTextArea();
+        bConectar = new javax.swing.JButton();
+        baudio = new javax.swing.JButton();
+        eservidor = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CHAT CS");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        areaMensajes.setColumns(20);
-        areaMensajes.setRows(5);
-        jScrollPane2.setViewportView(areaMensajes);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 822, 350));
-
-        baudio.setText("Audio");
-        getContentPane().add(baudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 430, -1, -1));
-
-        tusuario.setText("Usuario :");
-        getContentPane().add(tusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
-        getContentPane().add(eusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 122, -1));
-
-        tservidor.setText("IP Servidor :");
-        getContentPane().add(tservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
-        getContentPane().add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 120, -1));
-
-        epuerto.setText("8880");
-        getContentPane().add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 71, -1));
-
-        tpuerto.setText("Puerto :");
-        getContentPane().add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, -1, -1));
-
-        bConectar.setText("Conectar");
-        bConectar.addActionListener(new java.awt.event.ActionListener() {
+        bDesconectar.setBackground(new java.awt.Color(255, 93, 93));
+        bDesconectar.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        bDesconectar.setText("Desconectar");
+        bDesconectar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bDesconectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bConectarActionPerformed(evt);
+                bDesconectarActionPerformed(evt);
             }
         });
-        getContentPane().add(bConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 100, -1));
+        getContentPane().add(bDesconectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, 90, 30));
 
-        bDesconectar.setText("Desconectar");
-        getContentPane().add(bDesconectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, -1, -1));
-
-        fondo.setBackground(new java.awt.Color(51, 204, 255));
+        fondo.setBackground(new java.awt.Color(56, 178, 234));
         fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane1.setBorder(null);
+
+        lista.setBackground(new java.awt.Color(154, 250, 139));
+        lista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lista.setFont(new java.awt.Font("Berlin Sans FB", 0, 16)); // NOI18N
         lista.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Blanca", "Xals", "Dome", "Albertik" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lista.setOpaque(false);
         jScrollPane1.setViewportView(lista);
 
-        fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 160, 350));
+        fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 130, 220));
 
+        emensaje.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         emensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emensajeActionPerformed(evt);
             }
         });
-        fondo.add(emensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 430, 619, -1));
+        fondo.add(emensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 400, 520, 50));
 
+        bfoto.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         bfoto.setText("Foto");
-        fondo.add(bfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 430, -1, -1));
+        bfoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bfotoActionPerformed(evt);
+            }
+        });
+        fondo.add(bfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 400, 70, -1));
 
+        benviar.setBackground(new java.awt.Color(141, 210, 244));
+        benviar.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         benviar.setText("Enviar");
-        fondo.add(benviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 430, -1, -1));
+        fondo.add(benviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 400, 80, 50));
+
+        tusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        tusuario.setText("Usuario :");
+        fondo.add(tusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
+
+        tservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        tservidor.setText("IP :");
+        fondo.add(tservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
+
+        tpuerto.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        tpuerto.setText("Puerto :");
+        fondo.add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
+
+        epuerto.setText("8880");
+        fondo.add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 71, -1));
+
+        eusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        eusuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.blue, null, null));
+        eusuario.setCaretColor(new java.awt.Color(0, 0, 204));
+        eusuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        eusuario.setDisabledTextColor(new java.awt.Color(0, 0, 102));
+        fondo.add(eusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 122, -1));
+
+        jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        jLabel1.setText("En línea:");
+        fondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 90, -1));
+
+        areaMensajes.setColumns(20);
+        areaMensajes.setRows(5);
+        jScrollPane2.setViewportView(areaMensajes);
+
+        fondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 790, 330));
+
+        bConectar.setBackground(new java.awt.Color(154, 250, 139));
+        bConectar.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        bConectar.setText("Conectar");
+        bConectar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bConectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bConectarActionPerformed(evt);
+            }
+        });
+        fondo.add(bConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 90, 30));
+
+        baudio.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        baudio.setText("Audio");
+        fondo.add(baudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 70, -1));
+        fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 120, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Quichilla\\Desktop\\customer-service-icons-chat-blue.png")); // NOI18N
+        fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 110, 110));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 470));
 
@@ -121,6 +166,14 @@ public class InterfazChat extends javax.swing.JFrame {
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConectarActionPerformed
          
     }//GEN-LAST:event_bConectarActionPerformed
+
+    private void bDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDesconectarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bDesconectarActionPerformed
+
+    private void bfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bfotoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bfotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +245,8 @@ public class InterfazChat extends javax.swing.JFrame {
     private javax.swing.JTextField eservidor;
     private javax.swing.JTextField eusuario;
     private javax.swing.JPanel fondo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lista;

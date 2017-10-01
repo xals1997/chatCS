@@ -19,10 +19,13 @@ public class ChatCliente implements Runnable{
     Thread thClient; //eto qe es?
     Socket socket;
     BufferedReader in;
-    PrintWriter out; //estoq eu ess?
+    PrintWriter out; //es cómo se escribe en un fichero de texto. Java tiene dos clases 
+                     //para escribir en el, printWriter y printStream. printWriter recibe un objeto file
+                     //en el constructor, puede lanzar excepcion FileNotFoundException, siempre try y catch
+                     //https://www.youtube.com/watch?v=pmKwnZHb4wo
     InterfazChat interfazchat;//Cuando se cree no dara error
     List<String> listaUsuarios = new ArrayList(); 
-    JTextArea texto; //No se que es (Supongo que sera donde se introduce el texto)
+    JTextArea texto; //Es un cuadro de texto
     JList textoClientes;//la lista de los conectados
     
     //Colocamos setters y gettes chavales
@@ -91,6 +94,7 @@ public class ChatCliente implements Runnable{
         }
     }
     
+    //actualizacion de los usuarios en linea
     public void updateUsersList(String message){
         int start = message.indexOf("+");
         int end = message.lastIndexOf("+");
@@ -99,9 +103,16 @@ public class ChatCliente implements Runnable{
         listaUsuarios.add(user);
         
         if(listaUsuarios.size()==length){
+            //https://serprogramador.es/usando-un-jlist-para-almacenar-objetos-java-swing/
+            //vale digamos que es una especie de modelo vacío, al que luego le añades cosas
+            //
             DefaultListModel model = new DefaultListModel(); //wtf es esto loko??
+            
+            //constructor de la lista de los conectados, se le añade el modelo, vacío aún
            textoClientes.setModel(model);
             
+           //en este bucle se le van añadiendo al modelo, que ya está en textoClientes
+           //los usuarios de la lista de Usuarios,
             for(String user : listaUsuarios){
                 model.addElement(user);
             }
@@ -119,7 +130,12 @@ public class ChatCliente implements Runnable{
     
     public void sendMessage(String mensaje){
         out.println(mensaje);
-        out.flush();//pero que mierdo es esto!!!!
+        out.flush();//pero que mierdo es esto!!!! //hacer un flush, significa limpiar el buffer,
+       /* Hace que todo lo que se ha escrito en System.out sea
+completamente escrito. System.out puede hacer algún buffer interno de datos,
+por lo que no está garantizado que algo escrito en el flujo
+aparecerá inmediatamente en la salida estándar del proceso ().*/
+                    
     }
     
     public void waitAcceptance(){
