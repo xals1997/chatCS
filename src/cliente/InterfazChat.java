@@ -46,6 +46,11 @@ public class InterfazChat extends javax.swing.JFrame {
         baudio = new javax.swing.JButton();
         eservidor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CHAT CS");
@@ -79,7 +84,7 @@ public class InterfazChat extends javax.swing.JFrame {
         lista.setOpaque(false);
         jScrollPane1.setViewportView(lista);
 
-        fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 130, 220));
+        fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 200));
 
         emensaje.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         emensaje.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +106,11 @@ public class InterfazChat extends javax.swing.JFrame {
         benviar.setBackground(new java.awt.Color(141, 210, 244));
         benviar.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         benviar.setText("Enviar");
+        benviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                benviarActionPerformed(evt);
+            }
+        });
         fondo.add(benviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 400, 80, 50));
 
         tusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
@@ -115,7 +125,7 @@ public class InterfazChat extends javax.swing.JFrame {
         tpuerto.setText("Puerto :");
         fondo.add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
 
-        epuerto.setText("8880");
+        epuerto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         fondo.add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 71, -1));
 
         eusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
@@ -127,9 +137,10 @@ public class InterfazChat extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         jLabel1.setText("En línea:");
-        fondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 90, -1));
+        fondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 90, -1));
 
         areaMensajes.setColumns(20);
+        areaMensajes.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         areaMensajes.setRows(5);
         jScrollPane2.setViewportView(areaMensajes);
 
@@ -149,10 +160,32 @@ public class InterfazChat extends javax.swing.JFrame {
         baudio.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         baudio.setText("Audio");
         fondo.add(baudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 70, -1));
+
+        eservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 120, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Quichilla\\Desktop\\customer-service-icons-chat-blue.png")); // NOI18N
-        fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 110, 110));
+        fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 100, 90));
+
+        jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
+        jLabel2.setText("Autores:");
+        fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
+        jLabel4.setText("Alejandro Domenech");
+        fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
+        jLabel5.setText("Alberto Berenguer");
+        fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
+        jLabel8.setText("Blanca Vázquez");
+        fondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
+        jLabel9.setText("Carlos Aracil");
+        fondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, -1));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 470));
 
@@ -161,10 +194,23 @@ public class InterfazChat extends javax.swing.JFrame {
 
     private void emensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emensajeActionPerformed
         // TODO add your handling code here:
+        String recojo=emensaje.getText()+"\n";
+        emensaje.setText("");
+        areaMensajes.append(recojo);
     }//GEN-LAST:event_emensajeActionPerformed
 
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConectarActionPerformed
-         
+        
+        if(eusuario.getText().equals("") || eservidor.getText().equals("") || epuerto.getText().equals("")){
+            
+            enableConnected();
+            
+        }
+        
+        
+        
+        
+        
     }//GEN-LAST:event_bConectarActionPerformed
 
     private void bDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDesconectarActionPerformed
@@ -174,6 +220,13 @@ public class InterfazChat extends javax.swing.JFrame {
     private void bfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bfotoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bfotoActionPerformed
+
+    private void benviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benviarActionPerformed
+        // TODO add your handling code here:
+        String recojo=emensaje.getText()+"\n";
+        emensaje.setText("");
+        areaMensajes.append(recojo);
+    }//GEN-LAST:event_benviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,7 +299,12 @@ public class InterfazChat extends javax.swing.JFrame {
     private javax.swing.JTextField eusuario;
     private javax.swing.JPanel fondo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lista;

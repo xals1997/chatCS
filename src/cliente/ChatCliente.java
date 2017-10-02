@@ -124,7 +124,7 @@ public class ChatCliente implements Runnable{
         if(!b){
             JOptionPane.showMessageDialog(null ,text);
             socket.close();
-           // interfazchat.enableDisconnected();
+           interfazchat.enableDisconnected();
         }
     }
     
@@ -147,7 +147,7 @@ aparecerá inmediatamente en la salida estándar del proceso ().*/
                 texto.append(message);
                 texto.append("\n");
                 socket.close();
-               // interfazchat.enableDisconnected();
+               interfazchat.enableDisconnected();
             }
         }catch(Exception e){
             e.printStackTrace();
