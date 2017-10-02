@@ -164,7 +164,7 @@ public class InterfazChat extends javax.swing.JFrame {
         eservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 120, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Quichilla\\Desktop\\customer-service-icons-chat-blue.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/customer-service-icons-chat-blue.png"))); // NOI18N
         fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 100, 90));
 
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
@@ -194,17 +194,33 @@ public class InterfazChat extends javax.swing.JFrame {
 
     private void emensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emensajeActionPerformed
         // TODO add your handling code here:
-        String recojo=emensaje.getText()+"\n";
-        emensaje.setText("");
-        areaMensajes.append(recojo);
+        if(emensaje.getText().equals("")){
+            //no hace nada
+        }else{
+            String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
+            chat.sendMessage(recojo);
+             emensaje.setText("");
+             areaMensajes.append(recojo);
+        }
     }//GEN-LAST:event_emensajeActionPerformed
 
     private void bConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConectarActionPerformed
         
         if(eusuario.getText().equals("") || eservidor.getText().equals("") || epuerto.getText().equals("")){
-            
+            // no hace nada
+        }else{
+             int port = Integer.parseInt(epuerto.getText());
+            String host = eservidor.getText();
+            String username = eusuario.getText();
+            chat = new ChatCliente();
+            chat.setInterfaz(this);
+             chat.setHost(host);
+             chat.setPort(port);
+             chat.setUser(username);
+             chat.setTexto(areaMensajes);
+             chat.setTextClientes(lista);        
+             chat.startThreadClient();
             enableConnected();
-            
         }
         
         
@@ -214,7 +230,13 @@ public class InterfazChat extends javax.swing.JFrame {
     }//GEN-LAST:event_bConectarActionPerformed
 
     private void bDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDesconectarActionPerformed
-        // TODO add your handling code here:
+        try {
+            chat.socket.close();
+            enableDisconnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        enableDisconnected();
     }//GEN-LAST:event_bDesconectarActionPerformed
 
     private void bfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bfotoActionPerformed
@@ -222,10 +244,14 @@ public class InterfazChat extends javax.swing.JFrame {
     }//GEN-LAST:event_bfotoActionPerformed
 
     private void benviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benviarActionPerformed
-        // TODO add your handling code here:
-        String recojo=emensaje.getText()+"\n";
-        emensaje.setText("");
-        areaMensajes.append(recojo);
+        if(emensaje.getText().equals("")){
+            //no hace nada
+        }else{
+            String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
+            chat.sendMessage(recojo);
+             emensaje.setText("");
+             areaMensajes.append(recojo);
+        }
     }//GEN-LAST:event_benviarActionPerformed
 
     /**
@@ -245,13 +271,10 @@ public class InterfazChat extends javax.swing.JFrame {
     }
 
     public void enableDisconnected() {
-        eservidor.setText(null);
         eservidor.setEditable(true);
         eservidor.setEnabled(true);
-        epuerto.setText(null);
         epuerto.setEditable(true);
         epuerto.setEnabled(true);
-        eusuario.setText(null);
         eusuario.setEditable(true);
         eusuario.setEnabled(true);
         emensaje.setEnabled(false);

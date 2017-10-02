@@ -331,7 +331,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Quichilla\Desktop\customer-service-icons-chat-blue.png"/>
+              <Image iconType="3" name="/imagenes/customer-service-icons-chat-blue.png"/>
             </Property>
           </Properties>
           <Constraints>
