@@ -37,6 +37,7 @@ public class interfaz_servidor extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
@@ -122,6 +123,7 @@ public class interfaz_servidor extends javax.swing.JFrame {
         puerto.setEnabled(false);
         conectar.setEnabled(false);    
         desconectar.setEnabled(true);
+       
     }//GEN-LAST:event_conectarActionPerformed
 
     private void desconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarActionPerformed
