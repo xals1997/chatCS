@@ -138,7 +138,9 @@ public class interfaz_servidor extends javax.swing.JFrame {
         puerto.setEnabled(false);
         conectar.setEnabled(false);    
         desconectar.setEnabled(true);
-        //ServidorMultiusuario servidormultiusuario = new ServidorMultiusuario();
+        ServidorMultiUsuario servidor = new ServidorMultiUsuario();
+        servidor.configurarServidor( Integer.parseInt(puerto.getText()));
+        servidor.esperaClientes();
     }//GEN-LAST:event_conectarActionPerformed
 
     private void desconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarActionPerformed
