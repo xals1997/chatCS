@@ -77,7 +77,7 @@ public class InterfazChat extends javax.swing.JFrame {
         lista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lista.setFont(new java.awt.Font("Berlin Sans FB", 0, 16)); // NOI18N
         lista.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Blanca", "Xals", "Dome", "Albertik" };
+            String[] strings = { };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
