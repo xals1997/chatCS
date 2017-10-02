@@ -119,11 +119,15 @@ public class interfaz_servidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void conectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarActionPerformed
-        // TODO add your handling code here:
+        puerto.setEnabled(false);
+        conectar.setEnabled(false);    
+        desconectar.setEnabled(true);
     }//GEN-LAST:event_conectarActionPerformed
 
     private void desconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarActionPerformed
-        // TODO add your handling code here:
+        puerto.setEnabled(true);
+        desconectar.setEnabled(false);
+        conectar.setEnabled(true);
     }//GEN-LAST:event_desconectarActionPerformed
 
     /**
