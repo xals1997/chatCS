@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
-public class ServidorMultiUsuario {
+public class ServidorMultiUsuario implements Runnable{
     
     ServerSocket socketServidor;
     Socket socketNuevoCliente;
@@ -27,6 +27,13 @@ public class ServidorMultiUsuario {
     static List<String> usuarioClientes = new ArrayList<>();
     Scanner tecladoIn = new Scanner(System.in);
     int puerto;
+    
+    Thread hilo;
+    
+    public void creahilo(){
+        hilo = new Thread(this);
+        hilo.start();
+    }
     
     public void configurarServidor(int puerto){
         
@@ -66,6 +73,7 @@ public class ServidorMultiUsuario {
                 out.flush();
                 for (ClienteConectado client : clientes) {
                     client.enviarMensaje("El usuario '" + nombreUsuario + "' ha entrado al chat.");
+                    
 
                     for (ClienteConectado cc : clientes) {
                         client.enviarMensaje("+" + length + "+" + cc.nombreUsuario);
@@ -77,6 +85,18 @@ public class ServidorMultiUsuario {
             }
         } catch (Exception e) {
             e.printStackTrace();
-}
+            }
+    }
+    
+    public void desconectarServidor(){
+        try{
+            socketServidor.close();
+            socketNuevoCliente.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void run() {
+        esperaClientes();
     }
 }

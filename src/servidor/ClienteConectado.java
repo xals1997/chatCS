@@ -15,7 +15,7 @@ public class ClienteConectado implements Runnable{
     PrintWriter out;
     
      public ClienteConectado(Socket socket, String usuario) {
-        /*configClient(socket);*/
+        configurarCliente(socket);
         this.nombreUsuario = usuario;
     }
      public void configurarCliente(Socket socket){

@@ -10,7 +10,7 @@ package servidor;
  * @author xals1997
  */
 public class interfaz_servidor extends javax.swing.JFrame {
-
+    ServidorMultiUsuario servidor = new ServidorMultiUsuario();
     /**
      * Creates new form interfaz_servidor
      */
@@ -138,15 +138,16 @@ public class interfaz_servidor extends javax.swing.JFrame {
         puerto.setEnabled(false);
         conectar.setEnabled(false);    
         desconectar.setEnabled(true);
-        ServidorMultiUsuario servidor = new ServidorMultiUsuario();
         servidor.configurarServidor( Integer.parseInt(puerto.getText()));
-        servidor.esperaClientes();
+        servidor.creahilo();
     }//GEN-LAST:event_conectarActionPerformed
 
     private void desconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarActionPerformed
+       servidor.desconectarServidor();
         puerto.setEnabled(true);
         desconectar.setEnabled(false);
         conectar.setEnabled(true);
+        
     }//GEN-LAST:event_desconectarActionPerformed
 
     private void puertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puertoActionPerformed

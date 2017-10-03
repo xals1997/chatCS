@@ -82,12 +82,13 @@ public class ChatCliente implements Runnable{
         try{
             String mensaje;
             while((mensaje = in.readLine())!= null){
-                if(mensaje.substring(0, 1).equals("+")){
-                    updateUsersList(mensaje);
-                }else{
+                System.out.print(mensaje);
+                //if(mensaje.substring(0, 1).equals("+")){
+                 //   updateUsersList(mensaje);
+              //  }else{
                     texto.append(mensaje);
                     texto.append("\n");
-                }
+                //}
             }
         }catch(Exception e){
             e.printStackTrace();
