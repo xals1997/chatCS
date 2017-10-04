@@ -139,6 +139,9 @@ public class InterfazChat extends javax.swing.JFrame {
         jLabel1.setText("En línea:");
         fondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 90, -1));
 
+        jScrollPane2.setAutoscrolls(true);
+
+        areaMensajes.setEditable(false);
         areaMensajes.setColumns(20);
         areaMensajes.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         areaMensajes.setRows(5);
