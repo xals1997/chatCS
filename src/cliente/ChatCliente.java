@@ -87,6 +87,7 @@ public class ChatCliente implements Runnable{
                  //   updateUsersList(mensaje);
               //  }else{
                     texto.append(mensaje);
+                   texto.setCaretPosition(texto.getDocument().getLength());
                     texto.append("\n");
                 //}
             }

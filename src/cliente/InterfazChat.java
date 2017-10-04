@@ -203,6 +203,7 @@ public class InterfazChat extends javax.swing.JFrame {
             String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
             chat.sendMessage(recojo);
              emensaje.setText("");
+             areaMensajes.setCaretPosition(areaMensajes.getDocument().getLength());
         }
     }//GEN-LAST:event_emensajeActionPerformed
 
@@ -252,6 +253,7 @@ public class InterfazChat extends javax.swing.JFrame {
             String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
             chat.sendMessage(recojo);
              emensaje.setText("");
+             areaMensajes.setCaretPosition(areaMensajes.getDocument().getLength());
         }
     }//GEN-LAST:event_benviarActionPerformed
 
