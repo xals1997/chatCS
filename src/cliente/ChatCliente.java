@@ -27,7 +27,7 @@ public class ChatCliente implements Runnable{
     List<String> listaUsuarios = new ArrayList(); 
     JTextArea texto; //Es un cuadro de texto
     JList textoClientes;//la lista de los conectados
-    
+    DefaultListModel model = new DefaultListModel(); 
     //Colocamos setters y gettes chavales
     
     public void setPort(int port){
@@ -83,13 +83,13 @@ public class ChatCliente implements Runnable{
             String mensaje;
             while((mensaje = in.readLine())!= null){
                 System.out.print(mensaje);
-                //if(mensaje.substring(0, 1).equals("+")){
-                 //   updateUsersList(mensaje);
-              //  }else{
+                if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
+                   updateUsersList(mensaje);
+                }else{
                     texto.append(mensaje);
-                   texto.setCaretPosition(texto.getDocument().getLength());
+                   // texto.setCaretPosition(texto.getDocument().getLength());
                     texto.append("\n");
-                //}
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -107,9 +107,6 @@ public class ChatCliente implements Runnable{
         if(listaUsuarios.size()==length){
             //https://serprogramador.es/usando-un-jlist-para-almacenar-objetos-java-swing/
             //vale digamos que es una especie de modelo vacío, al que luego le añades cosas
-            //
-            DefaultListModel model = new DefaultListModel(); //wtf es esto loko??
-            
             //constructor de la lista de los conectados, se le añade el modelo, vacío aún
            textoClientes.setModel(model);
             
@@ -121,7 +118,13 @@ public class ChatCliente implements Runnable{
             listaUsuarios.clear();
         }
     }
-    
+    public void limpia_lista(){
+        model.removeAllElements();
+        listaUsuarios.remove(user);
+        textoClientes.removeAll();
+        listaUsuarios.clear();
+        
+    }
     public void getMessagesConnected(Boolean b, String text) throws IOException{
         if(!b){
             JOptionPane.showMessageDialog(null ,text);

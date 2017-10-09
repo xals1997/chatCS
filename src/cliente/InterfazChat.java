@@ -225,16 +225,13 @@ public class InterfazChat extends javax.swing.JFrame {
              chat.startThreadClient();
             enableConnected();
         }
-        
-        
-        
-        
-        
+    
     }//GEN-LAST:event_bConectarActionPerformed
 
     private void bDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDesconectarActionPerformed
         try {
             chat.socket.close();
+             chat.limpia_lista();
             enableDisconnected();
         } catch (Exception e) {
             e.printStackTrace();

@@ -25,7 +25,6 @@ public class ServidorMultiUsuario implements Runnable{
     Socket socketNuevoCliente;
     static List<ClienteConectado> clientes = new ArrayList<>();
     static List<String> usuarioClientes = new ArrayList<>();
-    Scanner tecladoIn = new Scanner(System.in);
     int puerto;
     
     Thread hilo;
@@ -50,6 +49,7 @@ public class ServidorMultiUsuario implements Runnable{
             while(true) {
                 socketNuevoCliente = socketServidor.accept();
                 comprobarUsuario(socketNuevoCliente);
+               
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -92,6 +92,8 @@ public class ServidorMultiUsuario implements Runnable{
         try{
             socketServidor.close();
             socketNuevoCliente.close();
+            clientes.clear();
+            usuarioClientes.clear();
         }catch(Exception e){
             e.printStackTrace();
         }
