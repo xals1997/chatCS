@@ -38,7 +38,6 @@ public class InterfazChat extends javax.swing.JFrame {
         tservidor = new javax.swing.JLabel();
         tpuerto = new javax.swing.JLabel();
         epuerto = new javax.swing.JTextField();
-        eusuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         areaMensajes = new javax.swing.JTextArea();
@@ -51,6 +50,9 @@ public class InterfazChat extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        tpuerto1 = new javax.swing.JLabel();
+        eusuario = new javax.swing.JTextField();
+        contrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CHAT CS");
@@ -115,25 +117,18 @@ public class InterfazChat extends javax.swing.JFrame {
 
         tusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         tusuario.setText("Usuario :");
-        fondo.add(tusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
+        fondo.add(tusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
 
         tservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        tservidor.setText("IP :");
-        fondo.add(tservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
+        tservidor.setText("Contaseña:");
+        fondo.add(tservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, -1, -1));
 
         tpuerto.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        tpuerto.setText("Puerto :");
-        fondo.add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
+        tpuerto.setText("IP:");
+        fondo.add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, -1, -1));
 
         epuerto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        fondo.add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 71, -1));
-
-        eusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        eusuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.blue, null, null));
-        eusuario.setCaretColor(new java.awt.Color(0, 0, 204));
-        eusuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        eusuario.setDisabledTextColor(new java.awt.Color(0, 0, 102));
-        fondo.add(eusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 122, -1));
+        fondo.add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 71, -1));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         jLabel1.setText("En línea:");
@@ -147,7 +142,7 @@ public class InterfazChat extends javax.swing.JFrame {
         areaMensajes.setRows(5);
         jScrollPane2.setViewportView(areaMensajes);
 
-        fondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 790, 330));
+        fondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 790, 320));
 
         bConectar.setBackground(new java.awt.Color(154, 250, 139));
         bConectar.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
@@ -165,7 +160,7 @@ public class InterfazChat extends javax.swing.JFrame {
         fondo.add(baudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 70, -1));
 
         eservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 120, -1));
+        fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 120, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/customer-service-icons-chat-blue.png"))); // NOI18N
         fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 100, 90));
@@ -189,6 +184,20 @@ public class InterfazChat extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Berlin Sans FB", 0, 11)); // NOI18N
         jLabel9.setText("Carlos Aracil");
         fondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, -1));
+
+        tpuerto1.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        tpuerto1.setText("Puerto :");
+        fondo.add(tpuerto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, -1, -1));
+
+        eusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        eusuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.blue, null, null));
+        eusuario.setCaretColor(new java.awt.Color(0, 0, 204));
+        eusuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        eusuario.setDisabledTextColor(new java.awt.Color(0, 0, 102));
+        fondo.add(eusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 122, -1));
+
+        contrasena.setText("jPasswordField1");
+        fondo.add(contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 470));
 
@@ -316,6 +325,7 @@ public class InterfazChat extends javax.swing.JFrame {
     private javax.swing.JButton baudio;
     private javax.swing.JButton benviar;
     private javax.swing.JButton bfoto;
+    private javax.swing.JPasswordField contrasena;
     private javax.swing.JTextField emensaje;
     private javax.swing.JTextField epuerto;
     private javax.swing.JTextField eservidor;
@@ -332,6 +342,7 @@ public class InterfazChat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> lista;
     private javax.swing.JLabel tpuerto;
+    private javax.swing.JLabel tpuerto1;
     private javax.swing.JLabel tservidor;
     private javax.swing.JLabel tusuario;
     // End of variables declaration//GEN-END:variables
