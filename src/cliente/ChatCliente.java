@@ -16,7 +16,9 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -39,16 +41,18 @@ public class ChatCliente implements Runnable{
     JList textoClientes;//la lista de los conectados
     DefaultListModel model = new DefaultListModel(); 
     //varaibles para el paso de imagenes
-     DataInputStream input;
-     BufferedInputStream bis;
+    DataInputStream input;
+    BufferedInputStream bis;
     BufferedOutputStream bos;
-     int inn;
+    int inn;
     byte[] byteArray;
      //Fichero a transferir
-    final String filename = "c:\\test.pdf";
+    String filename = "c:\\test.pdf"; //por ejemplo
     //Colocamos setters y gettes chavales
     
-    
+    public void setFilename(String file){
+        this.filename = file;
+    }
     public void setPort(int port){
         this.port = port;
     }
@@ -100,6 +104,7 @@ public class ChatCliente implements Runnable{
     public void getMessages(){
         try{
             String mensaje;
+            
             while((mensaje = in.readLine())!= null){
                 System.out.print(mensaje);
                 if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
@@ -158,8 +163,27 @@ public class ChatCliente implements Runnable{
        /* Hace que todo lo que se ha escrito en System.out sea
 completamente escrito. System.out puede hacer algún buffer interno de datos,
 por lo que no está garantizado que algo escrito en el flujo
-aparecerá inmediatamente en la salida estándar del proceso ().*/
-                    
+aparecerá inmediatamente en la salida estándar del proceso ().*/       
+    }
+    public void sendImage(String ruta_imagen){
+        try{
+            final File localFile = new File( ruta_imagen );
+            bis = new BufferedInputStream(new FileInputStream(localFile));
+            bos = new BufferedOutputStream(socket.getOutputStream());
+            //Enviamos el nombre del fichero
+            DataOutputStream dos=new DataOutputStream(socket.getOutputStream());
+            dos.writeUTF(localFile.getName());
+            //Enviamos el fichero
+            byteArray = new byte[8192];
+            while((inn = bis.read(byteArray)) != -1){
+               bos.write(byteArray,0,inn);
+            }
+ 
+        bis.close();
+        bos.close();
+        }catch ( Exception e ) {
+            System.err.println(e);
+         }
     }
     
     public void waitAcceptance(){
