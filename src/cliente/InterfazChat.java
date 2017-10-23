@@ -5,6 +5,9 @@
  */
 package cliente;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Alberto Berenguer
@@ -249,7 +252,14 @@ public class InterfazChat extends javax.swing.JFrame {
     }//GEN-LAST:event_bDesconectarActionPerformed
 
     private void bfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bfotoActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, PNG & GIF Images", "jpg", "gif","png");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+         if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+        }
+         
     }//GEN-LAST:event_bfotoActionPerformed
 
     private void benviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_benviarActionPerformed
