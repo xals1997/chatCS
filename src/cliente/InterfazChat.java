@@ -257,7 +257,8 @@ public class InterfazChat extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
          if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getAbsolutePath());
+            chat.setFilename(chooser.getSelectedFile().getAbsolutePath());
         }
          
     }//GEN-LAST:event_bfotoActionPerformed
