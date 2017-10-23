@@ -62,6 +62,8 @@ public class ServidorMultiUsuario implements Runnable{
             PrintWriter out = new PrintWriter(socketNuevoCliente.getOutputStream());
             String nombreUsuario = in.readLine();
             nombreUsuario = nombreUsuario.toLowerCase();
+            String contrasena = in.readLine();
+            contrasena = contrasena.toLowerCase();
 
             if (!usuarioClientes.contains(nombreUsuario)) {
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
