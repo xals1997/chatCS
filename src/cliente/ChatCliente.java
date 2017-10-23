@@ -12,6 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import javax.imageio.ImageIO;
+
 public class ChatCliente implements Runnable{
     int port;
     String host;
@@ -28,7 +38,16 @@ public class ChatCliente implements Runnable{
     JTextArea texto; //Es un cuadro de texto
     JList textoClientes;//la lista de los conectados
     DefaultListModel model = new DefaultListModel(); 
+    //varaibles para el paso de imagenes
+     DataInputStream input;
+     BufferedInputStream bis;
+    BufferedOutputStream bos;
+     int inn;
+    byte[] byteArray;
+     //Fichero a transferir
+    final String filename = "c:\\test.pdf";
     //Colocamos setters y gettes chavales
+    
     
     public void setPort(int port){
         this.port = port;
@@ -77,7 +96,7 @@ public class ChatCliente implements Runnable{
         thClient.start();
     }
     
-    //aqui actualiza lo de la lista de usuarios 
+   
     public void getMessages(){
         try{
             String mensaje;
