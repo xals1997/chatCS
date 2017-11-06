@@ -11,7 +11,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import java.io.IOException;
+import java.security.*;
+import java.util.Base64;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -94,6 +99,17 @@ public class ChatCliente implements Runnable{
             e.printStackTrace();
         }
     }
+    
+    public void generarAES(){
+        try{
+         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+	      keyGen.init(128);
+	     SecretKey clave = keyGen.generateKey();
+	      System.out.println(Base64.getEncoder().encodeToString(clave.getEncoded()));
+        }catch(Exception e){
+            System.out.println("No genera la clave AES");
+        }
+    }
     //creal el hilo
     public void startThreadClient(){
         thClient = new Thread(this);
@@ -107,12 +123,18 @@ public class ChatCliente implements Runnable{
             
             while((mensaje = in.readLine())!= null){
                 System.out.print(mensaje);
+                             
                 if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
-                   updateUsersList(mensaje);
+                   
+                     updateUsersList(mensaje);                  
+                
                 }else{
                     texto.append(mensaje);
                    // texto.setCaretPosition(texto.getDocument().getLength());
                     texto.append("\n");
+                }
+                if(mensaje.equals("CrearAES")){                  
+                         generarAES();
                 }
             }
         }catch(Exception e){

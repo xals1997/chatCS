@@ -43,8 +43,7 @@ public class ClienteConectado implements Runnable{
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-      
+    } 
       public void enviarMensaje(String mensaje) {
         out.println(mensaje);
         out.flush();

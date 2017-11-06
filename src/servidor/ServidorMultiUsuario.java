@@ -62,15 +62,18 @@ public class ServidorMultiUsuario implements Runnable{
             PrintWriter out = new PrintWriter(socketNuevoCliente.getOutputStream());
             String nombreUsuario = in.readLine();
             nombreUsuario = nombreUsuario.toLowerCase();
-    
+               
             if (!usuarioClientes.contains(nombreUsuario)) {
+                //comprobamos que es el primer cliente que se conecta
+                              
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
                 clientes.add(newClient);
                 usuarioClientes.add(nombreUsuario);
+ 
+                
                 int length = clientes.size();
-
-                out.println("true");
                 out.flush();
+                
                 for (ClienteConectado client : clientes) {
                     client.enviarMensaje("El usuario '" + nombreUsuario + "' ha entrado al chat.");
                     
@@ -83,6 +86,11 @@ public class ServidorMultiUsuario implements Runnable{
                 out.println("No ha sido posible conectarse'" + nombreUsuario + "' ya está en uso.");
                 out.flush();
             }
+            if(clientes.size()==1){
+                   out.println("CrearAES");
+                   out.flush();
+                   
+                }
         } catch (Exception e) {
             e.printStackTrace();
             }
