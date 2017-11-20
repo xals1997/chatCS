@@ -23,6 +23,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import javax.imageio.ImageIO;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+
+import javax.crypto.Cipher;
 
 public class ChatCliente implements Runnable{
     int port;
@@ -89,7 +101,27 @@ public class ChatCliente implements Runnable{
             socket = new Socket(host, port);//creamos el socket
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //esto se supone que lle lo del socket
             out = new PrintWriter(socket.getOutputStream());//esto envia el texto
+            
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            PublicKey publicKey = keyPair.getPublic();
+            
+            
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+     
+            System.out.println(publicKey);
+            System.out.println();
+            System.out.println("Modulo clave privada:   "+privateKey.getModulus());
+            System.out.println("Exponente calve privada: "+privateKey.getPrivateExponent());
+           
+            
+            
             waitAcceptance(); //esoera a que tal
+            
+            
+            
+         
+            
         }catch(Exception e){
             e.printStackTrace();
         }
