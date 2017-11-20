@@ -25,6 +25,7 @@ public class ServidorMultiUsuario implements Runnable{
     Socket socketNuevoCliente;
     static List<ClienteConectado> clientes = new ArrayList<>();
     static List<String> usuarioClientes = new ArrayList<>();
+    static List<String> RSAlista = new ArrayList<>();
     int puerto;
     
     Thread hilo;
@@ -60,6 +61,8 @@ public class ServidorMultiUsuario implements Runnable{
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socketNuevoCliente.getInputStream()));
             PrintWriter out = new PrintWriter(socketNuevoCliente.getOutputStream());
+            String rsa = in.readLine();
+            RSAlista.add(rsa);
             String nombreUsuario = in.readLine();
             nombreUsuario = nombreUsuario.toLowerCase();
     
@@ -69,6 +72,9 @@ public class ServidorMultiUsuario implements Runnable{
                 usuarioClientes.add(nombreUsuario);
                 int length = clientes.size();
 
+                
+                System.out.println("esro seria la clve rsa, espero: "+rsa);
+                System.out.println("En la lista hay "+RSAlista.size()+" clave/s guardadas");
                 out.println("true");
                 out.flush();
                 for (ClienteConectado client : clientes) {

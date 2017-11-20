@@ -35,6 +35,7 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -47,6 +48,8 @@ public class ChatCliente implements Runnable{
     String user;
     Thread thClient; //eto qe es?
     Socket socket;
+    BufferedReader pasoClaveRSA;
+    PrintWriter RSAjaja;
     BufferedReader in;
     PrintWriter out; //es cómo se escribe en un fichero de texto. Java tiene dos clases 
                      //para escribir en el, printWriter y printStream. printWriter recibe un objeto file
@@ -107,19 +110,27 @@ public class ChatCliente implements Runnable{
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //esto se supone que lle lo del socket
             out = new PrintWriter(socket.getOutputStream());//esto envia el texto
             
+            
+            pasoClaveRSA = new BufferedReader(new InputStreamReader (socket.getInputStream()));
+            RSAjaja = new PrintWriter(socket.getOutputStream());
+            
+            
+            
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
             PublicKey publicKey = keyPair.getPublic();
             
             
             RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            RSAPublicKey publica = (RSAPublicKey) publicKey;
      
             System.out.println(publicKey);
             System.out.println();
             System.out.println("Modulo clave privada:   "+privateKey.getModulus());
             System.out.println("Exponente calve privada: "+privateKey.getPrivateExponent());
            
-            
+            //RSAjaja.println(privateKey.getPrivateExponent());
+            out.println(publica.getModulus());
             
             waitAcceptance(); //esoera a que tal
             
