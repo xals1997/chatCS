@@ -42,10 +42,7 @@ public class ChatCliente implements Runnable{
     Thread thClient; //eto qe es?
     Socket socket;
     BufferedReader in;
-    PrintWriter out; //es cómo se escribe en un fichero de texto. Java tiene dos clases 
-                     //para escribir en el, printWriter y printStream. printWriter recibe un objeto file
-                     //en el constructor, puede lanzar excepcion FileNotFoundException, siempre try y catch
-                     //https://www.youtube.com/watch?v=pmKwnZHb4wo
+    PrintWriter out;
     InterfazChat interfazchat;//Cuando se cree no dara error
     List<String> listaUsuarios = new ArrayList(); 
     JTextArea texto; //Es un cuadro de texto
@@ -123,8 +120,19 @@ public class ChatCliente implements Runnable{
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String cifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
+        String vuelve="";
+        cifrador = Cipher.getInstance("AES");
+        cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
+        byte[] mensaje_cifrado = cifrador.doFinal(dato.getBytes());
         
-        
+        for (byte b : mensaje_cifrado) {
+           vuelve+=Integer.toHexString(0xFF & b);
+        }
+            return vuelve;
+    
     }
    
     public void getMessages(){
@@ -139,7 +147,6 @@ public class ChatCliente implements Runnable{
                     texto.append(mensaje);
                     texto.append("\n");
                 }
-               System.out.print("gola");
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -166,11 +173,8 @@ int cont=0;
             
            //en este bucle se le van añadiendo al modelo, que ya está en textoClientes
            //los usuarios de la lista de Usuarios,
-            for(String user : listaUsuarios){
-            
-                model.addElement(user);
-          
-             
+            for(String user : listaUsuarios){         
+                model.addElement(user);             
             }
             
             listaUsuarios.clear();
@@ -193,20 +197,15 @@ int cont=0;
         }
     }
     
-    public void sendMessage(String mensaje) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+    public void sendMessage(String mensaje){
         try {
             
-            cifrador = Cipher.getInstance("AES");
-            cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
-            byte[] mensaje_cifrado = cifrador.doFinal(mensaje.getBytes());
-            System.out.print(mensaje_cifrado);
-            out.println(mensaje_cifrado);
+            String mensajec = cifrarContenido(mensaje);
+            System.out.print(mensajec);
+            out.println(mensajec);
             out.flush();
-            
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPaddingException ex) {
-            Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(Exception e){
+           System.out.print("Algo pasa al cifrar: "+ e);
         }
     }
     public void sendImage(String ruta_imagen){
