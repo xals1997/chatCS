@@ -2,6 +2,7 @@ package cliente;
 /*
  * @author Alberto Berenguer
  */
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,7 +34,20 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
+	
+
+
+ import java.security.Key;
+
+ import javax.crypto.Cipher;
+ import javax.crypto.spec.SecretKeySpec;
+
+ import sun.misc.BASE64Decoder;
+ import sun.misc.BASE64Encoder;
+
 
 public class ChatCliente implements Runnable{
     int port;
@@ -123,15 +137,34 @@ public class ChatCliente implements Runnable{
     }
     
     public String cifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-        String vuelve="";
+       
+        
+        
+        
         cifrador = Cipher.getInstance("AES");
         cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
-        byte[] mensaje_cifrado = cifrador.doFinal(dato.getBytes());
-        
-        for (byte b : mensaje_cifrado) {
-           vuelve+=Integer.toHexString(0xFF & b);
-        }
+        byte[] encriptado= cifrador.doFinal(dato.getBytes());
+        String vuelve= new BASE64Encoder().encode(encriptado);
+  
             return vuelve;
+    
+    }
+    
+        public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
+        String vuelve ="";
+            try{
+        cifrador = Cipher.getInstance("AES");
+        cifrador.init(Cipher.DECRYPT_MODE,clave_secreta);
+        byte[] decordedValue = new BASE64Decoder().decodeBuffer(dato);
+         byte[] decValue = cifrador.doFinal(decordedValue);//////////LINE 50
+        vuelve = new String(decValue);
+        return vuelve;
+        }
+          catch(IOException e){
+            
+        }
+      return vuelve;
+            
     
     }
    
@@ -204,10 +237,28 @@ int cont=0;
             System.out.print(mensajec);
             out.println(mensajec);
             out.flush();
+            decryptMessage(mensajec);
         }catch(Exception e){
            System.out.print("Algo pasa al cifrar: "+ e);
         }
     }
+    
+    public void decryptMessage(String mensaje){
+                try {
+            
+            String mensajed = descifrarContenido(mensaje);
+            System.out.print(mensajed);
+            out.println(mensajed);
+            out.flush();
+        }catch(Exception e){
+           System.out.print("Algo pasa al desencriptar: "+ e);
+        }
+      
+        
+        
+        
+    }
+    
     public void sendImage(String ruta_imagen){
         try{
             final File localFile = new File( ruta_imagen );
