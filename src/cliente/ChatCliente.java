@@ -248,7 +248,7 @@ int cont=0;
             
             String mensajed = descifrarContenido(mensaje);
             System.out.print(mensajed);
-            out.println(mensajed);
+            out.println("Desencriptando..."+mensajed);
             out.flush();
         }catch(Exception e){
            System.out.print("Algo pasa al desencriptar: "+ e);

@@ -282,6 +282,7 @@ public class InterfazChat extends javax.swing.JFrame {
         }else{
             if(chat!=null){
             String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
+            
                 try {
                     chat.sendMessage(recojo);
                     
