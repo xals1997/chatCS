@@ -5,6 +5,8 @@
  */
 package cliente;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -131,6 +133,7 @@ public class InterfazChat extends javax.swing.JFrame {
         fondo.add(tpuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, -1, -1));
 
         epuerto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        epuerto.setText("8080");
         fondo.add(epuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 71, -1));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
@@ -163,6 +166,7 @@ public class InterfazChat extends javax.swing.JFrame {
         fondo.add(baudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 70, -1));
 
         eservidor.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        eservidor.setText("localhost");
         fondo.add(eservidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 120, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/customer-service-icons-chat-blue.png"))); // NOI18N
@@ -193,10 +197,16 @@ public class InterfazChat extends javax.swing.JFrame {
         fondo.add(tpuerto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, -1, -1));
 
         eusuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        eusuario.setText("user1");
         eusuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.blue, null, null));
         eusuario.setCaretColor(new java.awt.Color(0, 0, 204));
         eusuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         eusuario.setDisabledTextColor(new java.awt.Color(0, 0, 102));
+        eusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eusuarioActionPerformed(evt);
+            }
+        });
         fondo.add(eusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 122, -1));
 
         contrasena.setText("jPasswordField1");
@@ -213,7 +223,11 @@ public class InterfazChat extends javax.swing.JFrame {
             //no hace nada
         }else{
             String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
-            chat.sendMessage(recojo);
+            try {
+                chat.sendMessage(recojo);
+            } catch (Exception ex) {
+                Logger.getLogger(InterfazChat.class.getName()).log(Level.SEVERE, null, ex);
+            }
              emensaje.setText("");
              areaMensajes.setCaretPosition(areaMensajes.getDocument().getLength());
         }
@@ -268,12 +282,20 @@ public class InterfazChat extends javax.swing.JFrame {
         }else{
             if(chat!=null){
             String recojo=eusuario.getText()+": "+emensaje.getText()+"\n";
-            chat.sendMessage(recojo);
+                try {
+                    chat.sendMessage(recojo);
+                } catch (Exception ex) {
+                    Logger.getLogger(InterfazChat.class.getName()).log(Level.SEVERE, null, ex);
+                }
              emensaje.setText("");
              areaMensajes.setCaretPosition(areaMensajes.getDocument().getLength());
         }
         }
     }//GEN-LAST:event_benviarActionPerformed
+
+    private void eusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eusuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eusuarioActionPerformed
 
     /**
      * @param args the command line arguments

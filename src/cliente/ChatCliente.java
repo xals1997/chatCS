@@ -22,6 +22,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.imageio.ImageIO;
 
 public class ChatCliente implements Runnable{
@@ -39,7 +50,7 @@ public class ChatCliente implements Runnable{
     List<String> listaUsuarios = new ArrayList(); 
     JTextArea texto; //Es un cuadro de texto
     JList textoClientes;//la lista de los conectados
-    DefaultListModel model = new DefaultListModel(); 
+   
     //varaibles para el paso de imagenes
     DataInputStream input;
     BufferedInputStream bis;
@@ -49,7 +60,8 @@ public class ChatCliente implements Runnable{
      //Fichero a transferir
     String filename = "c:\\test.pdf"; //por ejemplo
     //Colocamos setters y gettes chavales
-    
+    SecretKey clave_secreta;
+    Cipher cifrador;
     public void setFilename(String file){
         this.filename = file;
     }
@@ -89,6 +101,7 @@ public class ChatCliente implements Runnable{
             socket = new Socket(host, port);//creamos el socket
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //esto se supone que lle lo del socket
             out = new PrintWriter(socket.getOutputStream());//esto envia el texto
+            generarAES();
             waitAcceptance(); //esoera a que tal
         }catch(Exception e){
             e.printStackTrace();
@@ -98,55 +111,77 @@ public class ChatCliente implements Runnable{
     public void startThreadClient(){
         thClient = new Thread(this);
         thClient.start();
+        
     }
     
+    public void generarAES(){
+        KeyGenerator keygen;
+        try {
+            keygen = KeyGenerator.getInstance("AES");
+            keygen.init(128);
+            clave_secreta=keygen.generateKey();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
    
     public void getMessages(){
         try{
-            String mensaje;
+  
+           String mensaje;
             
-            while((mensaje = in.readLine())!= null){
-                System.out.print(mensaje);
+            while((mensaje = in.readLine())!= null){               
                 if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
                    updateUsersList(mensaje);
-                }else{
+                }else{                   
                     texto.append(mensaje);
-                   // texto.setCaretPosition(texto.getDocument().getLength());
                     texto.append("\n");
                 }
+               System.out.print("gola");
             }
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
+int cont=0;
     //actualizacion de los usuarios en linea
     public void updateUsersList(String message){
+        
         int start = message.indexOf("+");
         int end = message.lastIndexOf("+");
         int length = Integer.parseInt(message.substring((start + 1), end));
         String username = message.substring((end + 1), message.length());
-        listaUsuarios.add(user);
+           
+        listaUsuarios.add(username);
         
         if(listaUsuarios.size()==length){
             //https://serprogramador.es/usando-un-jlist-para-almacenar-objetos-java-swing/
             //vale digamos que es una especie de modelo vacío, al que luego le añades cosas
             //constructor de la lista de los conectados, se le añade el modelo, vacío aún
+            DefaultListModel model = new DefaultListModel(); 
            textoClientes.setModel(model);
             
            //en este bucle se le van añadiendo al modelo, que ya está en textoClientes
            //los usuarios de la lista de Usuarios,
             for(String user : listaUsuarios){
+            
                 model.addElement(user);
+          
+             
             }
+            
             listaUsuarios.clear();
-        }
+            
+        } 
     }
     public void limpia_lista(){
-        model.removeAllElements();
+        /*model.removeAllElements();*/
         listaUsuarios.remove(user);
-        textoClientes.removeAll();
-        listaUsuarios.clear();
+        /*textoClientes.removeAll();
+        listaUsuarios.clear();*/
         
     }
     public void getMessagesConnected(Boolean b, String text) throws IOException{
@@ -154,16 +189,25 @@ public class ChatCliente implements Runnable{
             JOptionPane.showMessageDialog(null ,text);
             socket.close();
            interfazchat.enableDisconnected();
+           
         }
     }
     
-    public void sendMessage(String mensaje){
-        out.println(mensaje);
-        out.flush();//pero que mierdo es esto!!!! //hacer un flush, significa limpiar el buffer,
-       /* Hace que todo lo que se ha escrito en System.out sea
-completamente escrito. System.out puede hacer algún buffer interno de datos,
-por lo que no está garantizado que algo escrito en el flujo
-aparecerá inmediatamente en la salida estándar del proceso ().*/       
+    public void sendMessage(String mensaje) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+        try {
+            
+            cifrador = Cipher.getInstance("AES");
+            cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
+            byte[] mensaje_cifrado = cifrador.doFinal(mensaje.getBytes());
+            System.out.print(mensaje_cifrado);
+            out.println(mensaje_cifrado);
+            out.flush();
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void sendImage(String ruta_imagen){
         try{
