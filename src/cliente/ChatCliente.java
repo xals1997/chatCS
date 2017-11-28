@@ -235,7 +235,7 @@ int cont=0;
            
             String mensajec = cifrarContenido(mensaje);
             /*System.out.print(mensaje);*/
-            out.println(mensaje);
+            out.println(mensajec);
             out.flush();
          /*   decryptMessage(mensajec);*/
         }catch(Exception e){
