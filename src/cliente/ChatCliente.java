@@ -232,12 +232,12 @@ int cont=0;
     
     public void sendMessage(String mensaje){
         try {
-            
+           
             String mensajec = cifrarContenido(mensaje);
-            System.out.print(mensajec);
-            out.println(mensajec);
+            /*System.out.print(mensaje);*/
+            out.println(mensaje);
             out.flush();
-            decryptMessage(mensajec);
+         /*   decryptMessage(mensajec);*/
         }catch(Exception e){
            System.out.print("Algo pasa al cifrar: "+ e);
         }
@@ -247,9 +247,9 @@ int cont=0;
                 try {
             
             String mensajed = descifrarContenido(mensaje);
-            System.out.print(mensajed);
+            /*System.out.print(mensajed);
             out.println("Desencriptando..."+mensajed);
-            out.flush();
+            out.flush();*/
         }catch(Exception e){
            System.out.print("Algo pasa al desencriptar: "+ e);
         }
