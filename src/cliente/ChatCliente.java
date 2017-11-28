@@ -144,27 +144,30 @@ public class ChatCliente implements Runnable{
         cifrador = Cipher.getInstance("AES");
         cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
         byte[] encriptado= cifrador.doFinal(dato.getBytes());
-        String vuelve= new BASE64Encoder().encode(encriptado);
+        String vuelve= new BASE64Encoder().encode(encriptado); //a encode, se le pasa un array de bytes
   
             return vuelve;
     
     }
     
         public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-        String vuelve ="";
+        
+            byte[] decValue=null;
             try{
         cifrador = Cipher.getInstance("AES");
         cifrador.init(Cipher.DECRYPT_MODE,clave_secreta);
-        byte[] decordedValue = new BASE64Decoder().decodeBuffer(dato);
-         byte[] decValue = cifrador.doFinal(decordedValue);//////////LINE 50
-        vuelve = new String(decValue);
-        return vuelve;
+        
+        byte[] decordedValue = new BASE64Decoder().decodeBuffer(dato); //a decodeBuffer se le pasa un String, y no un array de bytes 
+        
+         decValue = cifrador.doFinal(decordedValue);//////////LINE 50
+        
+       
         }
           catch(IOException e){
             
         }
-      return vuelve;
-            
+  
+             return new String(decValue);
     
     }
    
@@ -172,11 +175,16 @@ public class ChatCliente implements Runnable{
         try{
   
            String mensaje;
-            
-            while((mensaje = in.readLine())!= null){               
+           
+           
+              
+            while((mensaje = in.readLine())!= null){   
+                System.out.print(mensaje);
+               
                 if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
                    updateUsersList(mensaje);
-                }else{                   
+                }else{
+                    mensaje= decryptMessage(mensaje);
                     texto.append(mensaje);
                     texto.append("\n");
                 }
@@ -192,7 +200,8 @@ int cont=0;
         
         int start = message.indexOf("+");
         int end = message.lastIndexOf("+");
-        int length = Integer.parseInt(message.substring((start + 1), end));
+       try{ int length = Integer.parseInt(message.substring((start + 1), end));
+       
         String username = message.substring((end + 1), message.length());
            
         listaUsuarios.add(username);
@@ -212,7 +221,9 @@ int cont=0;
             
             listaUsuarios.clear();
             
-        } 
+        }
+        }
+       catch(NumberFormatException e){}
     }
     public void limpia_lista(){
         /*model.removeAllElements();*/
@@ -237,16 +248,18 @@ int cont=0;
             /*System.out.print(mensaje);*/
             out.println(mensajec);
             out.flush();
-         /*   decryptMessage(mensajec);*/
+        
         }catch(Exception e){
            System.out.print("Algo pasa al cifrar: "+ e);
         }
     }
     
-    public void decryptMessage(String mensaje){
-                try {
+    public String decryptMessage(String mensaje){
+              String mensajed="";
+        
+        try {
             
-            String mensajed = descifrarContenido(mensaje);
+            mensajed = descifrarContenido(mensaje);
             /*System.out.print(mensajed);
             out.println("Desencriptando..."+mensajed);
             out.flush();*/
@@ -255,7 +268,7 @@ int cont=0;
         }
       
         
-        
+        return mensajed;
         
     }
     
@@ -297,7 +310,12 @@ int cont=0;
     }
     //Cuando se enciente el chat
     public void run() {
+        try{
         configCliente(); //abre el socket y crea las cosas
         getMessages();
+        }
+        catch(NumberFormatException e){
+            
+        }
     }
 }
