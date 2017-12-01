@@ -153,8 +153,6 @@ public class ChatCliente implements Runnable{
         String hola="";
        String[] aux=dato.split(" ");
        if(aux[0].compareToIgnoreCase("rtt/q2_")!=0){
-           System.out.println("entraaaaaa");
-          
                 byte[] decValue=null;
             try{
                 cifrador = Cipher.getInstance("AES");
@@ -178,7 +176,6 @@ public class ChatCliente implements Runnable{
        }
   
              return hola;
-    
     }
    
     public void getMessages(){
@@ -307,7 +304,8 @@ int cont=0;
             out.flush();
             String message = in.readLine();
             if(!message.equals("true")){
-                texto.append(message);
+                
+                texto.append(descifrarContenido(message));
                 texto.append("\n");
                 socket.close();
                interfazchat.enableDisconnected();

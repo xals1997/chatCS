@@ -66,6 +66,7 @@ public class ServidorMultiUsuario implements Runnable{
             if (!usuarioClientes.contains(nombreUsuario)) {
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
                 clientes.add(newClient);
+                
                 usuarioClientes.add(nombreUsuario);
                 int length = clientes.size();
 
@@ -91,7 +92,6 @@ public class ServidorMultiUsuario implements Runnable{
     public void desconectarServidor(){
         try{
             socketServidor.close();
-            socketNuevoCliente.close();
             clientes.clear();
             usuarioClientes.clear();
         }catch(Exception e){
