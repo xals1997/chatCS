@@ -137,49 +137,56 @@ public class ChatCliente implements Runnable{
     }
     
     public String cifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-       
-        
-        
-        
+       String vuelve="";
+        try{
         cifrador = Cipher.getInstance("AES");
         cifrador.init(Cipher.ENCRYPT_MODE,clave_secreta);
         byte[] encriptado= cifrador.doFinal(dato.getBytes());
-        String vuelve= new BASE64Encoder().encode(encriptado); //a encode, se le pasa un array de bytes
-  
+        vuelve= new BASE64Encoder().encode(encriptado); //a encode, se le pasa un array de bytes
+    
+        }catch(Exception e){}
             return vuelve;
     
     }
     
         public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-        
-            byte[] decValue=null;
+        String hola="";
+       String[] aux=dato.split(" ");
+       if(aux[0].compareToIgnoreCase("rtt/q2_")!=0){
+           System.out.println("entraaaaaa");
+          
+                byte[] decValue=null;
             try{
-        cifrador = Cipher.getInstance("AES");
-        cifrador.init(Cipher.DECRYPT_MODE,clave_secreta);
-        
-        byte[] decordedValue = new BASE64Decoder().decodeBuffer(dato); //a decodeBuffer se le pasa un String, y no un array de bytes 
-        
-         decValue = cifrador.doFinal(decordedValue);//////////LINE 50
-        
-       
-        }
-          catch(IOException e){
-            
-        }
+                cifrador = Cipher.getInstance("AES");
+                cifrador.init(Cipher.DECRYPT_MODE,clave_secreta);
+
+            byte[] decordedValue = new BASE64Decoder().decodeBuffer(dato); //a decodeBuffer se le pasa un String, y no un array de bytes 
+
+             decValue = cifrador.doFinal(decordedValue);//////////LINE 50
+
+             hola =new String(decValue);
+            }
+              catch(IOException e){
+
+            }
+       }
+       else{
+           for(int i=1;i<aux.length;i++){
+               hola+=aux[i]+" ";
+           }
+          
+       }
   
-             return new String(decValue);
+             return hola;
     
     }
    
     public void getMessages(){
         try{
   
-           String mensaje;
-           
-           
-              
+           String mensaje;   
             while((mensaje = in.readLine())!= null){   
-                System.out.print(mensaje);
+               
                
                 if(mensaje.length()>1 && mensaje.substring(0, 1).equals("+")){
                    updateUsersList(mensaje);
@@ -256,6 +263,7 @@ int cont=0;
     
     public String decryptMessage(String mensaje){
               String mensajed="";
+              
         
         try {
             

@@ -72,7 +72,7 @@ public class ServidorMultiUsuario implements Runnable{
                 out.println("true");
                 out.flush();
                 for (ClienteConectado client : clientes) {
-                    client.enviarMensaje("El usuario '" + nombreUsuario + "' ha entrado al chat.");
+                    client.enviarMensaje("rtt/q2_ El usuario '" + nombreUsuario + "' ha entrado al chat.");
                     
 
                     for (ClienteConectado cc : clientes) {
@@ -80,7 +80,7 @@ public class ServidorMultiUsuario implements Runnable{
                     }
                 }
             } else {
-                out.println("No ha sido posible conectarse'" + nombreUsuario + "' ya está en uso.");
+                out.println("rtt/q2_ No ha sido posible conectarse'" + nombreUsuario + "' ya está en uso.");
                 out.flush();
             }
         } catch (Exception e) {
