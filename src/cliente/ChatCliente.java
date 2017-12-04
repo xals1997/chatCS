@@ -186,7 +186,6 @@ public class ChatCliente implements Runnable{
     
         public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
         String hola="";
-        System.out.print(dato);
        String[] aux=dato.split(" ");
        if(aux[0].compareToIgnoreCase("rtt/q2_")!=0){
                 byte[] decValue=null;
@@ -210,12 +209,10 @@ public class ChatCliente implements Runnable{
            }
           
        }
-       System.out.println("recibimos" + hola);
-       if(hola.equalsIgnoreCase("generarAES")){
+    
+       if(hola.toUpperCase().compareTo("generarAES ".toUpperCase())==0){
             generarAES();
        }
-       
-  
              return hola;
     }
    

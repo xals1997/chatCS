@@ -71,17 +71,18 @@ public class ServidorMultiUsuario implements Runnable{
                
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
                 clientes.add(newClient);
-                if(clientes.size()==1){
-                     out.println("rtt/q2_ generarAES");
-                     out.flush();
-                }
-                 
+              
                 
                 usuarioClientes.add(nombreUsuario);
                 int length = clientes.size();
 
                 out.println("true");
                 out.flush();
+                  if(clientes.size()==1){
+                     out.println("rtt/q2_ generarAES");
+                     out.flush();
+                }
+                 
                 for (ClienteConectado client : clientes) {
                     client.enviarMensaje("rtt/q2_ El usuario '" + nombreUsuario + "' ha entrado al chat.");
                     
