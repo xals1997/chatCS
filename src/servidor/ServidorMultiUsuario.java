@@ -47,7 +47,9 @@ public class ServidorMultiUsuario implements Runnable{
     public void esperaClientes(){
          try{
             while(true) {
+                System.out.println("El servidor espera");
                 socketNuevoCliente = socketServidor.accept();
+                System.out.println("Se ha conectado alguien");
                 comprobarUsuario(socketNuevoCliente);
                
             }
@@ -60,12 +62,20 @@ public class ServidorMultiUsuario implements Runnable{
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socketNuevoCliente.getInputStream()));
             PrintWriter out = new PrintWriter(socketNuevoCliente.getOutputStream());
+           
             String nombreUsuario = in.readLine();
             nombreUsuario = nombreUsuario.toLowerCase();
     
             if (!usuarioClientes.contains(nombreUsuario)) {
+                
+               
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
                 clientes.add(newClient);
+                if(clientes.size()==1){
+                     out.println("rtt/q2_ generarAES");
+                     out.flush();
+                }
+                 
                 
                 usuarioClientes.add(nombreUsuario);
                 int length = clientes.size();

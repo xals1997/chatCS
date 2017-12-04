@@ -40,7 +40,11 @@ import javax.imageio.ImageIO;
 	
 
 
- import java.security.Key;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 
  import javax.crypto.Cipher;
  import javax.crypto.spec.SecretKeySpec;
@@ -50,6 +54,13 @@ import javax.imageio.ImageIO;
 
 
 public class ChatCliente implements Runnable{
+    
+    
+    KeyPairGenerator keyPairGenerator;
+    KeyPair keyPair;
+    RSAPrivateKey privateKey;
+    RSAPublicKey publicKey;
+    
     int port;
     String host;
     String user;
@@ -112,7 +123,7 @@ public class ChatCliente implements Runnable{
             socket = new Socket(host, port);//creamos el socket
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //esto se supone que lle lo del socket
             out = new PrintWriter(socket.getOutputStream());//esto envia el texto
-            generarAES();
+           
             waitAcceptance(); //esoera a que tal
         }catch(Exception e){
             e.printStackTrace();
@@ -136,6 +147,30 @@ public class ChatCliente implements Runnable{
         }
     }
     
+     public void generaryenviarRSA(){
+        
+        try{
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPair = keyPairGenerator.generateKeyPair();
+            
+            
+            
+            
+            privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            publicKey = (RSAPublicKey) keyPair.getPublic();
+            
+            
+            System.out.println("Modulo clave patata:   "+publicKey.getModulus());
+            System.out.println("Exponente calve publica: "+publicKey.getPublicExponent());
+           
+            out.println(publicKey.getModulus());
+            out.println(publicKey.getPublicExponent());
+        } catch (NoSuchAlgorithmException ex) {
+           System.out.println("AY CARAMBA DIJO VAR SINSON");
+        }
+        
+    }
+    
     public String cifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
        String vuelve="";
         try{
@@ -151,6 +186,7 @@ public class ChatCliente implements Runnable{
     
         public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
         String hola="";
+        System.out.print(dato);
        String[] aux=dato.split(" ");
        if(aux[0].compareToIgnoreCase("rtt/q2_")!=0){
                 byte[] decValue=null;
@@ -174,6 +210,11 @@ public class ChatCliente implements Runnable{
            }
           
        }
+       System.out.println("recibimos" + hola);
+       if(hola.equalsIgnoreCase("generarAES")){
+            generarAES();
+       }
+       
   
              return hola;
     }
