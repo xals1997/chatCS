@@ -2,7 +2,7 @@ package cliente;
 /*
  * @author Alberto Berenguer
  */
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+//import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -41,16 +42,20 @@ import javax.imageio.ImageIO;
 
 
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 
  import javax.crypto.Cipher;
  import javax.crypto.spec.SecretKeySpec;
 
  import sun.misc.BASE64Decoder;
  import sun.misc.BASE64Encoder;
+ import java.util.Base64;
 
 
 public class ChatCliente implements Runnable{
@@ -123,7 +128,7 @@ public class ChatCliente implements Runnable{
             socket = new Socket(host, port);//creamos el socket
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //esto se supone que lle lo del socket
             out = new PrintWriter(socket.getOutputStream());//esto envia el texto
-           
+            generaryenviarRSA();
             waitAcceptance(); //esoera a que tal
         }catch(Exception e){
             e.printStackTrace();
@@ -142,6 +147,7 @@ public class ChatCliente implements Runnable{
             keygen = KeyGenerator.getInstance("AES");
             keygen.init(128);
             clave_secreta=keygen.generateKey();
+            System.out.println("Clave AES generada");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ChatCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -151,7 +157,7 @@ public class ChatCliente implements Runnable{
         
         try{
             keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPair = keyPairGenerator.generateKeyPair();
+            keyPair = keyPairGenerator.generateKeyPair();
             
             
             
@@ -160,8 +166,8 @@ public class ChatCliente implements Runnable{
             publicKey = (RSAPublicKey) keyPair.getPublic();
             
             
-            System.out.println("Modulo clave patata:   "+publicKey.getModulus());
-            System.out.println("Exponente calve publica: "+publicKey.getPublicExponent());
+            //System.out.println("Modulo clave patata:   "+publicKey.getModulus());
+            //System.out.println("Exponente calve publica: "+publicKey.getPublicExponent());
            
             out.println(publicKey.getModulus());
             out.println(publicKey.getPublicExponent());
@@ -170,6 +176,31 @@ public class ChatCliente implements Runnable{
         }
         
     }
+     public void cifraAES(String modulo, String exponente) throws InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+     {
+         try{
+            System.out.println("clave: "+clave_secreta);
+            String aesString = Base64.getEncoder().encodeToString(clave_secreta.getEncoded());
+            BigInteger clave = new BigInteger(modulo,10); // hex base
+            BigInteger claveexponente = new BigInteger(exponente,10); // decimal base
+
+            RSAPublicKeySpec keySpec = new RSAPublicKeySpec(clave, claveexponente);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            RSAPublicKey rsa = (RSAPublicKey) keyFactory.generatePublic(keySpec);
+            //System.out.println("La clave se ha reconstruido correctamente");
+            
+            cifrador = Cipher.getInstance("RSA");
+            cifrador.init(Cipher.ENCRYPT_MODE,publicKey);
+            byte[] encriptado= cifrador.doFinal(aesString.getBytes());
+            
+            out.println("rtt/q2_ AEScifrada" + user +encriptado.toString());
+            
+            System.out.println("Haber que baaaa AEScifrada" + user +encriptado.toString());
+            
+         } catch ( Exception e) {
+            e.printStackTrace();
+        }
+     }
     
     public String cifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
        String vuelve="";
@@ -184,8 +215,11 @@ public class ChatCliente implements Runnable{
     
     }
     
-        public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException{
-        String hola="";
+        public String descifrarContenido(String dato)throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException{
+        
+       System.out.println("dato: "+ dato);     
+            
+       String hola="";
        String[] aux=dato.split(" ");
        if(aux[0].compareToIgnoreCase("rtt/q2_")!=0){
                 byte[] decValue=null;
@@ -204,15 +238,26 @@ public class ChatCliente implements Runnable{
             }
        }
        else{
-           for(int i=1;i<aux.length;i++){
+            if(aux[1].toUpperCase().compareTo("encriptaAES".toUpperCase())==0)
+            {
+                cifraAES(aux[2], aux[3]);
+                hola="";
+          
+            }
+            else{
+       
+        for(int i=1;i<aux.length;i++){
                hola+=aux[i]+" ";
            }
+       }
           
        }
     
        if(hola.toUpperCase().compareTo("generarAES ".toUpperCase())==0){
             generarAES();
+            hola = "";
        }
+
              return hola;
     }
    
@@ -301,7 +346,7 @@ int cont=0;
               
         
         try {
-            
+            System.out.println("mensajeas<fzdgchvj: "+ mensaje);
             mensajed = descifrarContenido(mensaje);
             /*System.out.print(mensajed);
             out.println("Desencriptando..."+mensajed);

@@ -42,7 +42,9 @@ public class ClienteConectado implements Runnable{
         }
      }
      
-     public void crearpublica(String modulo, String exponente) throws InvalidKeySpecException{
+     
+     /*Este metodo RECONSTRUYE la clave a partir del modulo y exp pasado*/
+     public void crearpublica(String modulo, String exponente) throws InvalidKeySpecException{ 
          
          try{
              
@@ -53,6 +55,7 @@ public class ClienteConectado implements Runnable{
             RSAPublicKeySpec keySpeck = new RSAPublicKeySpec(clave, claveexponente);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             publicKey = (RSAPublicKey) keyFactory.generatePublic(keySpeck);
+            //System.out.println("La clave se ha reconstruido correctamente");
          } catch (NoSuchAlgorithmException ex) {
             System.out.println("AY CARAMBA DIJO VAR SINSON");
         }

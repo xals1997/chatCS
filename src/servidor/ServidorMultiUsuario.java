@@ -62,7 +62,12 @@ public class ServidorMultiUsuario implements Runnable{
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socketNuevoCliente.getInputStream()));
             PrintWriter out = new PrintWriter(socketNuevoCliente.getOutputStream());
+            
+            String key = in.readLine();
+            String expKey = in.readLine();
            
+            System.out.println("El modulo: "+key);
+            System.out.println("El exponente: "+expKey);
             String nombreUsuario = in.readLine();
             nombreUsuario = nombreUsuario.toLowerCase();
     
@@ -71,6 +76,7 @@ public class ServidorMultiUsuario implements Runnable{
                
                 ClienteConectado newClient = new ClienteConectado(socketNuevoCliente, nombreUsuario);
                 clientes.add(newClient);
+                newClient.crearpublica(key, expKey);
               
                 
                 usuarioClientes.add(nombreUsuario);
@@ -80,8 +86,21 @@ public class ServidorMultiUsuario implements Runnable{
                 out.flush();
                   if(clientes.size()==1){
                      out.println("rtt/q2_ generarAES");
+                     newClient.tieneAES = true;
                      out.flush();
                 }
+                  else
+                  {
+                      for(ClienteConectado client : clientes)
+                      {
+                          System.out.println(client.tieneAES);
+                          if(client.tieneAES)
+                          {
+                              client.enviarMensaje("rtt/q2_ encriptaAES "+key+" "+expKey +" "+newClient.nombreUsuario);
+                              break;
+                          }
+                      }
+                  }
                  
                 for (ClienteConectado client : clientes) {
                     client.enviarMensaje("rtt/q2_ El usuario '" + nombreUsuario + "' ha entrado al chat.");
