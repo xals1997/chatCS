@@ -47,9 +47,8 @@ public class ClienteConectado implements Runnable{
      public void crearpublica(String modulo, String exponente) throws InvalidKeySpecException{ 
          
          try{
-             
-         
-            BigInteger clave = new BigInteger(modulo,10); // hex base
+              
+            BigInteger clave = new BigInteger(modulo,16); // hex base
             BigInteger claveexponente = new BigInteger(exponente,10); // decimal base
 
             RSAPublicKeySpec keySpeck = new RSAPublicKeySpec(clave, claveexponente);
